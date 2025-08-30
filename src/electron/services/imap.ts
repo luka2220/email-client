@@ -23,6 +23,19 @@ socket.once("data", (data: Buffer) => {
   switch (greeting) {
     case "OK":
       console.log("OK procees to auth -> ", data.toString("utf-8"));
+      // Send login command
+      const cmd = Buffer.from(
+        `A1 login ${gmailUserName} "${gmailPassword}"\r\n`
+      );
+      socket.write(cmd, (err) => {
+        if (err) {
+          console.log("Login command error: ", {
+            error: err.message,
+            stack: err.stack,
+          });
+        }
+      });
+
       break;
     case "PREAUTH":
       console.log("PREAUTH already authenticated -> ", data.toString("utf-8"));
@@ -35,11 +48,11 @@ socket.once("data", (data: Buffer) => {
       return;
   }
 
-  parseImapConnectionMessages();
+  atachServerListener(socket);
 });
 
-const parseImapConnectionMessages = () =>
-  socket.on("data", (data: Buffer) => {
+function atachServerListener(sock: tls.TLSSocket) {
+  sock.on("data", (data: Buffer) => {
     const txt = data.toString("utf-8");
     const lines = txt.split("\r\n");
 
@@ -47,6 +60,7 @@ const parseImapConnectionMessages = () =>
       console.log(line);
     }
   });
+}
 
 socket.on("end", () => {
   console.log("Close imap connection");

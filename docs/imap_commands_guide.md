@@ -61,45 +61,45 @@ Choose atom/quoted/literal per argument content. For literals, honor the continu
 
 ### CAPABILITY
 
-A001 CAPABILITY
-• CAPABILITY IMAP4rev1 IDLE NAMESPACE AUTH=XOAUTH2 AUTH=PLAIN STARTTLS UIDPLUS ENABLE
-A001 OK CAPABILITY completed
+- A001 CAPABILITY
+- CAPABILITY IMAP4rev1 IDLE NAMESPACE AUTH=XOAUTH2 AUTH=PLAIN STARTTLS UIDPLUS ENABLE
+- A001 OK CAPABILITY completed
 
 ### STARTTLS (if on port 143)
 
-A002 STARTTLS
-A002 OK Begin TLS negotiation now
+- A002 STARTTLS
+  A002 OK Begin TLS negotiation now
 
 → Upgrade the socket to TLS, then re-send `CAPABILITY`.
 
 ### LOGIN
 
-A003 LOGIN “user@example.com” “app-password”
-A003 OK LOGIN completed
+- A003 LOGIN “user@example.com” “app-password”
+  A003 OK LOGIN completed
 
 ### AUTHENTICATE XOAUTH2
 
-A004 AUTHENTICATE XOAUTH2
-A004 OK Success
+- A004 AUTHENTICATE XOAUTH2
+- A004 OK Success
 
 Base64 string encodes:  
 `user=user@example.com^Aauth=Bearer <access_token>^A^A` (`^A` = `\x01`).
 
 ### SELECT INBOX
 
-A005 SELECT INBOX
-• 24 EXISTS
-• FLAGS (\Answered \Flagged \Seen \Deleted \Draft)
-A005 OK [READ-WRITE] SELECT completed
+- A005 SELECT INBOX
+  • 24 EXISTS
+  • FLAGS (\Answered \Flagged \Seen \Deleted \Draft)
+- A005 OK [READ-WRITE] SELECT completed
 
 ### FETCH
 
-A006 FETCH 1:\* (FLAGS BODY[HEADER.FIELDS (FROM TO SUBJECT DATE)])
-• 1 FETCH (FLAGS (\Seen) BODY[HEADER.FIELDS (FROM TO SUBJECT DATE)] {123}
-From: …
-Subject: …
-)
-A006 OK FETCH completed
+- A006 FETCH 1:\* (FLAGS BODY[HEADER.FIELDS (FROM TO SUBJECT DATE)])
+  • 1 FETCH (FLAGS (\Seen) BODY[HEADER.FIELDS (FROM TO SUBJECT DATE)] {123}
+  From: …
+  Subject: …
+  )
+- A006 OK FETCH completed
 
 ---
 
