@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "test-smtp": "ts-node src/electron/services/smtp.ts",
+    "test-imap": "ts-node src/electron/services/imap.ts",
     "dev": "vite",
     "build": "tsc && vite build && electron-builder"
   },
